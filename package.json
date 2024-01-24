@@ -1,0 +1,20 @@
+{
+  "name": "assignment-b1-crud-snippets",
+  "version": "1.0.0",
+  "description": "A CRUD web application to manage code snippets.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon --inspect --env-file=.env src/server.js",
+    "lint": "npx eslint ./src || exit 0",
+    "lint:fix": "npx eslint ./src --fix || exit 0"
+  },
+  "author": "Jennifer von Trotta-Treyden <jv222th@student.lnu.se>",
+  "license": "ISC",
+  "dependencies": {
+    "@lnu/eslint-config": "^1.1.10",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "mongoose": "^8.1.0"
+  }
+}
