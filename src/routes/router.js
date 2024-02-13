@@ -1,6 +1,7 @@
 /**
  * @file Defines the main router.
- * @module router
+ * @
+ * dule router
  * @author Mats Loock
  * @author Jennifer von Trotta-Treyden <jv222th@student.lnu.se>
  */
