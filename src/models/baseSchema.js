@@ -11,6 +11,7 @@ import mongoose from 'mongoose'
 const convertOptions = Object.freeze({
   getters: true, // Include getters and virtual properties.
   versionKey: false, // Exclude the __v property.
+
   /**
    * Transforms the document, removing the _id property.
    *

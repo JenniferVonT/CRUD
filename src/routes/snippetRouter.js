@@ -1,18 +1,20 @@
 /**
- * @file Defines the task router.
- * @module taskRouter
+ * @file Defines the snippet router.
+ * @module snippetRouter
  * @author Mats Loock
+ * @author Jennifer von Trotta-Treyden <jv222th@student.lnu.se>
  */
-// src/routes/taskRouter.js
+
+// src/routes/snippetRouter.js
 import express from 'express'
-import { TaskController } from '../controllers/TaskController.js'
+import { SnippetController } from '../controllers/SnippetController.js'
 
 export const router = express.Router()
 
-const controller = new TaskController()
+const controller = new SnippetController()
 
 // Provide req.doc to the route if :id is present in the route path.
-router.param('id', (req, res, next, id) => controller.loadTaskDocument(req, res, next, id))
+router.param('id', (req, res, next, id) => controller.loadSnippetDocument(req, res, next, id))
 
 // Map HTTP verbs and route paths to controller action methods.
 router.get('/', (req, res, next) => controller.index(req, res, next))
