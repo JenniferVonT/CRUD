@@ -4,7 +4,7 @@
   "description": "A CRUD web application to manage code snippets.",
   "main": "server.js",
   "scripts": {
-    "start": "node src/server.js",
+    "start": "node -r dotenv/config src/server.js",
     "dev": "nodemon --inspect --env-file=.env src/server.js",
     "lint": "npx eslint ./src || exit 0",
     "lint:fix": "npx eslint ./src --fix || exit 0"
@@ -13,7 +13,10 @@
   "license": "ISC",
   "dependencies": {
     "@lnu/eslint-config": "^1.1.10",
+    "dotenv": "^16.4.4",
+    "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.17.3",
     "mongoose": "^8.1.0"
   }
