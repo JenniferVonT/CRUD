@@ -1,38 +1,38 @@
 /**
- * @file Defines the TaskController class.
- * @module TaskController
+ * @file Defines the SnippetController class.
+ * @module SnippetController
  * @author Mats Loock
  * @author Jennifer von Trotta-Treyden <jv222th@student.lnu.se>
  */
 
-import { TaskModel } from '../models/TaskModel.js'
+import { SnippetModel } from '../models/SnippetModel.js'
 
 /**
  * Encapsulates a controller.
  */
-export class TaskController {
+export class SnippetController {
   /**
    * Provide req.doc to the route if :id is present.
    *
    * @param {object} req - Express request object.
    * @param {object} res - Express response object.
    * @param {Function} next - Express next middleware function.
-   * @param {string} id - The value of the id for the task to load.
+   * @param {string} id - The value of the id for the snippet to load.
    */
-  async loadTaskDocument (req, res, next, id) {
+  async loadSnippetDocument (req, res, next, id) {
     try {
-      // Get the task document.
-      const taskDoc = await TaskModel.findById(id)
+      // Get the snippet document.
+      const snippetDoc = await SnippetModel.findById(id)
 
-      // If the task document is not found, throw an error.
-      if (!taskDoc) {
-        const error = new Error('The task you requested does not exist.')
+      // If the snippet document is not found, throw an error.
+      if (!snippetDoc) {
+        const error = new Error('The Snippet you requested does not exist.')
         error.status = 404
         throw error
       }
 
-      // Provide the task document to req.
-      req.doc = taskDoc
+      // Provide the snippet document to req.
+      req.doc = snippetDoc
 
       // Next middleware.
       next()
@@ -42,7 +42,7 @@ export class TaskController {
   }
 
   /**
-   * Displays a list of all tasks.
+   * Displays a list of all snippets.
    *
    * @param {object} req - Express request object.
    * @param {object} res - Express response object.
@@ -51,28 +51,28 @@ export class TaskController {
   async index (req, res, next) {
     try {
       const viewData = {
-        tasks: (await TaskModel.find())
-          .map(taskDoc => taskDoc.toObject())
+        snippets: (await SnippetModel.find())
+          .map(snippet => snippet.toObject())
       }
 
-      res.render('tasks/index', { viewData })
+      res.render('snippets/index', { viewData })
     } catch (error) {
       next(error)
     }
   }
 
   /**
-   * Returns a HTML form for creating a new task.
+   * Returns a HTML form for creating a new snippet.
    *
    * @param {object} req - Express request object.
    * @param {object} res - Express response object.
    */
   async create (req, res) {
-    res.render('tasks/create')
+    res.render('snippets/create')
   }
 
   /**
-   * Creates a new task.
+   * Creates a new snippet.
    *
    * @param {object} req - Express request object.
    * @param {object} res - Express response object.
@@ -81,12 +81,12 @@ export class TaskController {
     try {
       const { description, done } = req.body
 
-      await TaskModel.create({
+      await SnippetModel.create({
         description,
         done: done === 'on'
       })
 
-      req.session.flash = { type: 'success', text: 'The task was created successfully.' }
+      req.session.flash = { type: 'success', text: 'The snippet was created successfully.' }
       res.redirect('.')
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
@@ -95,14 +95,14 @@ export class TaskController {
   }
 
   /**
-   * Returns a HTML form for updating a task.
+   * Returns a HTML form for updating a snippet.
    *
    * @param {object} req - Express request object.
    * @param {object} res - Express response object.
    */
   async update (req, res) {
     try {
-      res.render('tasks/update', { viewData: req.doc.toObject() })
+      res.render('snippets/update', { viewData: req.doc.toObject() })
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
       res.redirect('..')
@@ -110,7 +110,7 @@ export class TaskController {
   }
 
   /**
-   * Updates a specific task.
+   * Updates a specific snippet.
    *
    * @param {object} req - Express request object.
    * @param {object} res - Express response object.
@@ -122,9 +122,9 @@ export class TaskController {
 
       if (req.doc.isModified()) {
         await req.doc.save()
-        req.session.flash = { type: 'success', text: 'The task was updated successfully.' }
+        req.session.flash = { type: 'success', text: 'The snippet was updated successfully.' }
       } else {
-        req.session.flash = { type: 'info', text: 'The task was not updated because there was nothing to update.' }
+        req.session.flash = { type: 'info', text: 'The snippet was not updated because there was nothing to update.' }
       }
       res.redirect('..')
     } catch (error) {
@@ -134,14 +134,14 @@ export class TaskController {
   }
 
   /**
-   * Returns a HTML form for deleting a task.
+   * Returns a HTML form for deleting a snippet.
    *
    * @param {object} req - Express request object.
    * @param {object} res - Express response object.
    */
   async delete (req, res) {
     try {
-      res.render('tasks/delete', { viewData: req.doc.toObject() })
+      res.render('snippets/delete', { viewData: req.doc.toObject() })
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
       res.redirect('..')
@@ -149,7 +149,7 @@ export class TaskController {
   }
 
   /**
-   * Deletes the specified task.
+   * Deletes the specified snippet.
    *
    * @param {object} req - Express request object.
    * @param {object} res - Express response object.
@@ -158,7 +158,7 @@ export class TaskController {
     try {
       await req.doc.deleteOne()
 
-      req.session.flash = { type: 'success', text: 'The task was deleted successfully.' }
+      req.session.flash = { type: 'success', text: 'The snippet was deleted successfully.' }
       res.redirect('..')
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }

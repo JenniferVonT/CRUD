@@ -1,6 +1,6 @@
 /**
- * @file Defines the Task model.
- * @module TaskModel
+ * @file Defines the Snippet model.
+ * @module SnippetModel
  * @author Mats Loock
  * @author Jennifer von Trotta-Treyden <jv222th@student.lnu.se>
  */
@@ -26,4 +26,4 @@ const schema = new mongoose.Schema({
 schema.add(BASE_SCHEMA)
 
 // Create a model using the schema.
-export const TaskModel = mongoose.model('Task', schema)
+export const SnippetModel = mongoose.model('Snippet', schema)
