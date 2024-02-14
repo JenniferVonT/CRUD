@@ -15,6 +15,7 @@ export const router = express.Router()
 
 router.use('/', homeRouter)
 router.use('/snippets', snippetRouter)
+router.use('/home', homeRouter)
 
 // Catch 404 (ALWAYS keep this as the last route).
 router.use('*', (req, res, next) => {
