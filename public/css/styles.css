@@ -13,11 +13,12 @@ button {
   margin-top: 20px;
 }
 
-#enter-button {
+.enter-button {
   padding: 2%;
   padding-left: 3%;
   padding-right: 3%;
   border-radius: 20px;
+  margin: 30px;
   font-size: 2rem;
   text-decoration: none;
   color: #212529;
@@ -26,7 +27,7 @@ button {
   box-shadow: 5px 5px 10px 5px #21252980;
 }
 
-#enter-button:hover {
+.enter-button:hover {
   background-color: #FFE000;
   color: #14171a;
   box-shadow: 2px 2px 5px 2px #21252980;
