@@ -20,17 +20,4 @@ export class HomeController {
   index (req, res, next) {
     res.render('home/index')
   }
-
-  /**
-   * Displays a page.
-   *
-   * @param {object} req - Express request object.
-   * @param {object} res - Express response object.
-   * @param {Function} next - Express next middleware function.
-   */
-  show (req, res, next) {
-    const { url } = req.params
-    console.log(url)
-    res.render(url)
-  }
 }

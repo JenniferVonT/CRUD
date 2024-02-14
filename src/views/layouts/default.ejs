@@ -14,7 +14,11 @@
 </head>
 
 <body>
-  <%- include('../partials/header') %>
+  <% if (isAuthenticated) { %>
+    <% include('../partials/header-authenticated.ejs'); %>
+  <% } else { %>
+    <% include('../partials/header-non-authenticated.ejs'); %>
+  <% } %>
   <main role="main" class="container">
     <%- include('../partials/flash') %>
     <%- body %>
