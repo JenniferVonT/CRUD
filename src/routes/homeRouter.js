@@ -12,5 +12,5 @@ export const router = express.Router()
 
 const controller = new HomeController()
 
+console.log('homeROUTER running...')
 router.get('/', (req, res, next) => controller.index(req, res, next))
-router.get('/home', (res, req, next) => controller.show(req, res, next))

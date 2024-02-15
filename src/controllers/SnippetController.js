@@ -78,6 +78,7 @@ export class SnippetController {
    * @param {object} res - Express response object.
    */
   async createPost (req, res) {
+    console.log('Entered createPost method...')
     try {
       const { description, done } = req.body
 

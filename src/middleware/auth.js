@@ -7,7 +7,7 @@
 /**
  * Represents an Authorization/Authentication class.
  */
-export class Auth {
+export default class Auth {
   /**
    * Checks if the user is Authorized...
    * if the specific account have access to certain content.
@@ -30,9 +30,6 @@ export class Auth {
    * @returns {void} - moves on to the next method if user is authenticated.
    */
   isAuthenticated (req, res, next) {
-    if (req.isAuthenticated()) {
-      return next()
-    }
-    res.redirect('/login')
+    // CODE HERE.
   }
 }

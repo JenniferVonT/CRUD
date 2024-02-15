@@ -2,8 +2,11 @@
   "name": "assignment-b1-crud-snippets",
   "version": "1.0.0",
   "description": "A CRUD web application to manage code snippets.",
-  "main": "server.js",
+  "main": "src/server.js",
   "type": "module",
+  "engines": {
+    "node": ">=20.6.0"
+  },
   "scripts": {
     "start": "node -r dotenv/config src/server.js",
     "dev": "nodemon --inspect --env-file=.env src/server.js",
@@ -12,6 +15,7 @@
   },
   "author": "Jennifer von Trotta-Treyden <jv222th@student.lnu.se>",
   "license": "ISC",
+  "private": "true",
   "dependencies": {
     "@lnu/eslint-config": "^1.1.10",
     "dotenv": "^16.4.4",

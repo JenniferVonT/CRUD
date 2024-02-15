@@ -1,11 +1,11 @@
-<h1>Delete task</h1>
-<form class="row g-3" method="post" action="./tasks/<%= viewData?.id %>/delete">
+<h1>Delete snippet</h1>
+<form class="row g-3" method="post" action="./snippets/<%= viewData?.id %>/delete">
   <input type="hidden" name="id" value="<%= viewData?.id %>" />
   <div class="col-md-12">
     <label class="form-label" for="descriptionInput">
       Description
     </label>
-    <input type="text" class="form-control" id="descriptionInput" placeholder="Update task description here" value="<%= viewData?.description %>" disabled />
+    <input type="text" class="form-control" id="descriptionInput" placeholder="Update snippet here" value="<%= viewData?.description %>" disabled />
   </div>
   <div class="col-12">
     <div class="form-check">

@@ -10,12 +10,14 @@ import express from 'express'
 import http from 'node:http'
 import { router as homeRouter } from './homeRouter.js'
 import { router as snippetRouter } from './snippetRouter.js'
+import { router as accountRouter } from './accountRouter.js'
 
 export const router = express.Router()
 
-router.use('/', homeRouter)
-router.use('/snippets', snippetRouter)
-router.use('/home', homeRouter)
+console.log('router running...')
+router.use('./', homeRouter)
+router.use('./snippets', snippetRouter)
+router.use('./account', accountRouter)
 
 // Catch 404 (ALWAYS keep this as the last route).
 router.use('*', (req, res, next) => {

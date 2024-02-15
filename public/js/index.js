@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   // Find the link to the current page and make it active.
-  document.querySelectorAll(`a[href="${location.pathname}"].nav-link`).forEach((a) => {
+  document.querySelectorAll(`a[href$="${location.pathname}"].nav-link`).forEach((a) => {
     a.classList.add('active')
     a.setAttribute('aria-current', 'page')
   })

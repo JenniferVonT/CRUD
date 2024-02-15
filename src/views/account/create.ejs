@@ -1,0 +1,21 @@
+<h1>Create account</h1>
+<form class="row g-3" method="post" action="./tasks/create">
+  <div class="col-md-12">
+    <label class="form-label" for="AccountInput">
+      Description
+    </label>
+    <input type="text" class="form-control" id="accountUsername" name="description" placeholder="Enter a username" required autofocus />
+    <input type="text" class="form-control" id="accountPassword" name="description" placeholder="Enter a password" required autofocus />
+  </div>
+  <div class="col-12">
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" id="doneCheck" name="done" />
+      <label class="form-check-label" for="doneCheck">
+        Done
+      </label>
+    </div>
+  </div>
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Create</button>
+  </div>
+</form>
