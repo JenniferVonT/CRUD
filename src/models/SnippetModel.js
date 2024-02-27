@@ -21,6 +21,17 @@ const schema = new mongoose.Schema({
     required: true,
     default: false
   }
+}, {
+  timestamp: true,
+  toObject: {
+    getters: true,
+    versionKey: false,
+    // eslint-disable-next-line jsdoc/require-jsdoc
+    transform: (doc, ret) => {
+      delete ret._id // Exclude the _id property.
+      return ret
+    }
+  }
 })
 
 schema.add(BASE_SCHEMA)

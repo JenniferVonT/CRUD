@@ -1,0 +1,33 @@
+<% if (viewData.account.user) { %>
+<h1><%= account.user %>'s profile</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Profile image</th>
+      <th>Username</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="text-center text-primary"></td>
+      <td class="w-100 <% if (account.done) { %> text-muted <% } %>">
+        <%= account.icon %>
+      </td>
+  
+      <td class="text-center text-primary"></td>
+      <td class="w-100 <% if (account.done) { %> text-muted <% } %>">
+        <%= account.user %>
+      </td>
+
+      <td class="text-nowrap">
+        <a href="./account/<%= account.user %>/delete">Delete</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<% } else { %>
+<h1>There is no profile</h1>
+<br><br><br>
+<a class="enter-button" href="./account/create">Create account</a>
+<% } %>

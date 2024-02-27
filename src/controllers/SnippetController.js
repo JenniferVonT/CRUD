@@ -78,7 +78,6 @@ export class SnippetController {
    * @param {object} res - Express response object.
    */
   async createPost (req, res) {
-    console.log('Entered createPost method...')
     try {
       const { description, done } = req.body
 
@@ -91,7 +90,7 @@ export class SnippetController {
       res.redirect('.')
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
-      res.redirect('./create')
+      res.redirect('/create')
     }
   }
 

@@ -12,5 +12,4 @@ export const router = express.Router()
 
 const controller = new HomeController()
 
-console.log('homeROUTER running...')
 router.get('/', (req, res, next) => controller.index(req, res, next))

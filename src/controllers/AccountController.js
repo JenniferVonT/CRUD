@@ -41,6 +41,26 @@ export class AccountController {
   }
 
   /**
+   * Returns an html showing the profile information.
+   *
+   * @param {object} req - Express request object.
+   * @param {object} res - Express response object.
+   * @param {Function} next - Express next middleware function.
+   */
+  async index (req, res, next) {
+    try {
+      const viewData = {
+        account: (await AccountModel.find())
+          .map(account => account.toObject())
+      }
+
+      res.render('account/index', { viewData })
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  /**
    * Returns a HTML form for creating a new account.
    *
    * @param {object} req - Express request object.
@@ -58,58 +78,20 @@ export class AccountController {
    */
   async createAccount (req, res) {
     try {
-      const { username, password, done } = req.body
+      const { username, password } = req.body
 
       await AccountModel.create({
         username,
-        password,
-        done: done === 'on'
+        password
       })
+
+      req.session.name = username
 
       req.session.flash = { type: 'success', text: 'The account was created successfully.' }
       res.redirect('.')
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
-      res.redirect('./account/create')
-    }
-  }
-
-  /**
-   * Returns a HTML form for updating an account.
-   *
-   * @param {object} req - Express request object.
-   * @param {object} res - Express response object.
-   */
-  async update (req, res) {
-    try {
-      res.render('account/update', { viewData: req.user.toObject() })
-    } catch (error) {
-      req.session.flash = { type: 'danger', text: error.message }
-      res.redirect('..')
-    }
-  }
-
-  /**
-   * Updates the account password.
-   *
-   * @param {object} req - Express request object.
-   * @param {object} res - Express response object.
-   */
-  async updateAccount (req, res) {
-    try {
-      if ('password' in req.body) req.user.password = req.body.password
-      if ('done' in req.body) req.user.done = req.body.done === 'on'
-
-      if (req.user.isModified()) {
-        await req.user.save()
-        req.session.flash = { type: 'success', text: 'The password was updated successfully.' }
-      } else {
-        req.session.flash = { type: 'info', text: 'The password was not updated because there was nothing to update.' }
-      }
-      res.redirect('..')
-    } catch (error) {
-      req.session.flash = { type: 'danger', text: error.message }
-      res.redirect('./update')
+      res.redirect('/account')
     }
   }
 
@@ -142,7 +124,7 @@ export class AccountController {
       res.redirect('..')
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
-      res.redirect('./account/delete')
+      res.redirect('/account/delete')
     }
   }
 }

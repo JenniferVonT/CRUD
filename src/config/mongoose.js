@@ -40,5 +40,6 @@ export const connectToDatabase = async (connectionString) => {
 
   // Connect to the server.
   console.log('Mongoose connecting to MongoDB.')
-  return mongoose.connect(connectionString)
+  return mongoose.connect(connectionString, {
+  })
 }

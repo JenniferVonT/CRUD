@@ -14,10 +14,9 @@ import { router as accountRouter } from './accountRouter.js'
 
 export const router = express.Router()
 
-console.log('router running...')
-router.use('./', homeRouter)
-router.use('./snippets', snippetRouter)
-router.use('./account', accountRouter)
+router.use('/', homeRouter)
+router.use('/snippets', snippetRouter)
+router.use('/account', accountRouter)
 
 // Catch 404 (ALWAYS keep this as the last route).
 router.use('*', (req, res, next) => {

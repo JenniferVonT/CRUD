@@ -20,11 +20,6 @@ const schema = new mongoose.Schema({
     required: true,
     trim: true,
     minlength: 8
-  },
-  done: {
-    type: Boolean,
-    required: true,
-    default: false
   }
 })
 

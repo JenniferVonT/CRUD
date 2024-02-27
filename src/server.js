@@ -19,7 +19,7 @@ dotenv.config()
 
 try {
   // Connect to MongoDB.
-  // await connectToDatabase(process.env.DB_CONNECTION_STRING)
+  await connectToDatabase(process.env.DB_CONNECTION_STRING)
 
   // Creates an Express application.
   const app = express()

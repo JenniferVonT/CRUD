@@ -16,13 +16,10 @@ const controller = new AccountController()
 router.param('user', (req, res, next, user) => controller.loadAccount(req, res, next, user))
 
 // Map HTTP verbs and route paths to controller action methods.
-router.get('/account', (req, res, next) => controller.index(req, res, next))
+router.get('/', (req, res, next) => controller.index(req, res, next))
 
-router.get('/account/create', (req, res, next) => controller.create(req, res, next))
-router.post('/account/create', (req, res, next) => controller.createAccount(req, res, next))
-
-router.get('/:user/update', (req, res, next) => controller.update(req, res, next))
-router.post('/:user/update', (req, res, next) => controller.updateAccount(req, res, next))
+router.get('/create', (req, res, next) => controller.create(req, res, next))
+router.post('/create', (req, res, next) => controller.createAccount(req, res, next))
 
 router.get('/:user/delete', (req, res, next) => controller.delete(req, res, next))
 router.post('/:user/delete', (req, res, next) => controller.deleteAccount(req, res, next))
