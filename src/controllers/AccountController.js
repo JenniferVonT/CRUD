@@ -5,6 +5,7 @@
  */
 
 import { AccountModel } from '../models/AccountModel.js'
+import bcrypt from 'bcrypt'
 
 /**
  * Encapsulates a controller.
@@ -80,19 +81,80 @@ export class AccountController {
     try {
       const { username, password } = req.body
 
+      // Hash and salt the password for encryption.
+      const hashedPassword = await bcrypt.hash(password, 10)
+
       await AccountModel.create({
         username,
-        password
+        password: hashedPassword
       })
-
-      req.session.name = username
 
       req.session.flash = { type: 'success', text: 'The account was created successfully.' }
       res.redirect('.')
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
-      res.redirect('/account')
+      res.redirect('account/login')
     }
+  }
+
+  /**
+   * Get the login page.
+   *
+   * @param {object} req - Express request object.
+   * @param {object} res - Express response object.
+   */
+  async login (req, res) {
+    res.render('account/login')
+  }
+
+  /**
+   * Handles the login verification.
+   *
+   * @param {object} req - Express request object.
+   * @param {object} res - Express response object.
+   */
+  async loginAccount (req, res) {
+    try {
+      const { username, password } = req.body
+      const user = await AccountModel.findOne({ username })
+
+      if (!user) {
+        const error = new Error('The username and/or password is incorrect.')
+        error.status = 404
+        throw error
+      }
+
+      // Compare the entered password with the stored password.
+      const passwordMatch = await bcrypt.compare(password, user.password)
+
+      if (!passwordMatch) {
+        const error = new Error('The username and/or password is incorrect.')
+        error.status = 401 // Unauthorized
+        throw error
+      }
+
+      // Set the user in the session.
+      req.session.user = user
+
+      // Redirect.
+      res.redirect('../snippets')
+    } catch (error) {
+      req.session.flash = { type: 'danger', text: error.message }
+      res.redirect('login')
+    }
+  }
+
+  /**
+   * Handles the logout.
+   *
+   * @param {object} req - Express request object.
+   * @param {object} res - Express response object.
+   */
+  async logout (req, res) {
+    // Remove the session.
+    req.session.destroy()
+
+    res.redirect('/')
   }
 
   /**

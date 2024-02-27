@@ -10,7 +10,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-link" href="./">Home</a>
+            <a class="nav-link" href="./snippets">Home</a>
+            <% if (!locals.user) { %>
+            <a class="nav-link" href="./account/login">Login</a>
+            <% } %>
+            <% if (locals.user) { %>
+            <a class="nav-link" href="./snippets/create">Create snippet</a>
+            <a class="nav-link" href="./account">Profile</a>
+            <form id="logoutForm" action="./account/logout" method="POST" style="display: inline;">
+              <button class="nav-link" type="submit" style="border: none; background: none; padding: 8px; margin: 0;">Logout</button>
+            </form>
+            <% } %>
           </div>
         </div>
       </div>

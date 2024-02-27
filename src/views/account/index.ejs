@@ -1,6 +1,6 @@
-<% if (viewData.account.user) { %>
-<h1><%= account.user %>'s profile</h1>
-<table class="table table-striped">
+<% if (locals.user) { %>
+<h1><%= user.username %>'s profile</h1>
+<table class="profile">
   <thead>
     <tr>
       <th>Profile image</th>
@@ -10,18 +10,17 @@
   </thead>
   <tbody>
     <tr>
-      <td class="text-center text-primary"></td>
-      <td class="w-100 <% if (account.done) { %> text-muted <% } %>">
-        <%= account.icon %>
+      <td>
+        <img src="" alt="profile">
       </td>
-  
-      <td class="text-center text-primary"></td>
-      <td class="w-100 <% if (account.done) { %> text-muted <% } %>">
-        <%= account.user %>
+      <td>
+        <%= user.username %>
       </td>
 
       <td class="text-nowrap">
-        <a href="./account/<%= account.user %>/delete">Delete</a>
+        <form id="deleteAccount" action="./account/delete" method="POST">
+          <a href="./account/<%= user %>/delete" class="deleteButton">Delete</a>
+        </form>
       </td>
     </tr>
   </tbody>

@@ -58,6 +58,8 @@ try {
   // Middleware to be executed before the routes.
   app.use((req, res, next) => {
     // Flash messages - survives only a round trip.
+    res.locals.user = req.session.user
+
     if (req.session.flash) {
       res.locals.flash = req.session.flash
       delete req.session.flash
