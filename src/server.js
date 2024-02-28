@@ -60,7 +60,11 @@ try {
     // Flash messages - survives only a round trip.
     res.locals.user = req.session.user
 
-    if (req.session.flash) {
+    // If the account is deleted, terminate the session. If not save the flash message and move on.
+    if (req.session.flash && req.session.flash.text.includes('The account was deleted successfully.')) {
+      res.locals.flash = req.session.flash
+      req.session.destroy()
+    } else if (req.session.flash) {
       res.locals.flash = req.session.flash
       delete req.session.flash
     }

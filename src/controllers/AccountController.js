@@ -82,18 +82,18 @@ export class AccountController {
       const { username, password } = req.body
 
       // Hash and salt the password for encryption.
-      const hashedPassword = await bcrypt.hash(password, 10)
+      // const hashedPassword = await bcrypt.hash(password, 10)
 
       await AccountModel.create({
         username,
-        password: hashedPassword
+        password
       })
 
-      req.session.flash = { type: 'success', text: 'The account was created successfully.' }
-      res.redirect('.')
+      req.session.flash = { type: 'success', text: 'The account was created successfully. Please login to continue' }
+      res.redirect('login')
     } catch (error) {
-      req.session.flash = { type: 'danger', text: error.message }
-      res.redirect('account/login')
+      req.session.flash = { type: 'danger', text: 'The username is already in use' }
+      res.redirect('create')
     }
   }
 
@@ -178,15 +178,16 @@ export class AccountController {
    * @param {object} req - Express request object.
    * @param {object} res - Express response object.
    */
-  async deletePost (req, res) {
+  async deleteAccount (req, res) {
     try {
       await req.user.deleteOne()
 
+      delete req.session.user
       req.session.flash = { type: 'success', text: 'The account was deleted successfully.' }
-      res.redirect('..')
+      res.redirect('/')
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
-      res.redirect('/account/delete')
+      res.redirect('..')
     }
   }
 }

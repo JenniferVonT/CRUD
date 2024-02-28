@@ -1,5 +1,5 @@
 <% if (locals.user) { %>
-<h1><%= user.username %>'s profile</h1>
+<h1><%= locals.user.username %>'s profile</h1>
 <table class="profile">
   <thead>
     <tr>
@@ -14,13 +14,11 @@
         <img src="" alt="profile">
       </td>
       <td>
-        <%= user.username %>
+        <%= locals.user.username %>
       </td>
 
       <td class="text-nowrap">
-        <form id="deleteAccount" action="./account/delete" method="POST">
-          <a href="./account/<%= user %>/delete" class="deleteButton">Delete</a>
-        </form>
+          <a class="deleteButton" href="./account/<%= locals.user.id %>/delete">Delete</a>
       </td>
     </tr>
   </tbody>
