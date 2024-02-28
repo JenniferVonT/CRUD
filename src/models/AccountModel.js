@@ -19,7 +19,7 @@ const schema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    minlength: [8, 'The password must be a minimum of 10 characters long']
+    minlength: [10, 'The password must be a minimum of 10 characters long']
   }
 }, {
   timestamps: true,
@@ -28,6 +28,7 @@ const schema = new mongoose.Schema({
 
 schema.add(BASE_SCHEMA)
 
+// Hash and salt the password before saving the account.
 schema.pre('save', async function () {
   this.password = await bcrypt.hash(this.password, 10)
 })

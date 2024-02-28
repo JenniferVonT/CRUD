@@ -20,7 +20,7 @@
             <form id="logoutForm" action="./account/logout" method="POST" style="display: inline;">
               <button class="nav-link" type="submit" style="border: none; background: none; padding: 8px; margin: 0;">Logout</button>
             </form>
-            <i class="showUserInHeader">Logged in as <%= locals.user.username %></i>
+            <i class="showUserInHeader">Logged in as <i style="color: #998c28;"><%= locals.user.username %></i></i>
             <% } %>
           </div>
         </div>

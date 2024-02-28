@@ -2,12 +2,7 @@
 <h1>Update Snippet</h1>
 <form class="row g-3" method="post" action="./snippets/<%= viewData?.id %>/update">
   <div class="col-md-12">
-    <label class="form-label" for="descriptionInput">
-      Content
-    </label>
-    <input type="text" class="form-control" id="descriptionInput" name="description" placeholder="Update snippet here" value="<%= viewData?.description %>" required autofocus />
-  </div>
-  <div class="col-12">
+    <textarea class="form-control" id="descriptionInput" name="description" placeholder="Enter your snippet here" rows="15" required autofocus><%= viewData?.description %></textarea>
   </div>
   <div class="col-12">
     <button type="submit" class="btn btn-primary">Update</button>

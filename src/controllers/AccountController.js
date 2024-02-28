@@ -5,6 +5,7 @@
  */
 
 import { AccountModel } from '../models/AccountModel.js'
+import { SnippetModel } from '../models/SnippetModel.js'
 import bcrypt from 'bcrypt'
 
 /**
@@ -81,9 +82,6 @@ export class AccountController {
     try {
       const { username, password } = req.body
 
-      // Hash and salt the password for encryption.
-      // const hashedPassword = await bcrypt.hash(password, 10)
-
       await AccountModel.create({
         username,
         password
@@ -92,8 +90,13 @@ export class AccountController {
       req.session.flash = { type: 'success', text: 'The account was created successfully. Please login to continue' }
       res.redirect('login')
     } catch (error) {
-      req.session.flash = { type: 'danger', text: 'The username is already in use' }
-      res.redirect('create')
+      if (error.code === 11000) {
+        req.session.flash = { type: 'danger', text: 'The username is already in use.' }
+        res.redirect('create')
+      } else {
+        req.session.flash = { type: 'danger', text: error.message }
+        res.redirect('create')
+      }
     }
   }
 
@@ -173,16 +176,21 @@ export class AccountController {
   }
 
   /**
-   * Deletes the specified account.
+   * Deletes the specified account and all it's snippets.
    *
    * @param {object} req - Express request object.
    * @param {object} res - Express response object.
    */
   async deleteAccount (req, res) {
     try {
-      await req.user.deleteOne()
+      // Get the username and delete all the snippets from that user.
+      const userID = req.session.user.username
+      await SnippetModel.deleteMany({ author: userID })
 
+      // Delete the user account in the database and remove the user from the session.
+      await req.user.deleteOne()
       delete req.session.user
+
       req.session.flash = { type: 'success', text: 'The account was deleted successfully.' }
       res.redirect('/')
     } catch (error) {

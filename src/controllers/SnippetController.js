@@ -103,7 +103,13 @@ export class SnippetController {
    */
   async update (req, res) {
     try {
-      res.render('snippets/update', { viewData: req.doc.toObject() })
+      // Check if the session user is authorized to view this.
+      if (await this.checkAuthorization(req)) {
+        res.render('snippets/update', { viewData: req.doc.toObject() })
+      } else {
+        req.session.flash = { type: 'danger', text: 'You are not authorized to update someone elses snippet.' }
+        res.redirect('..')
+      }
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
       res.redirect('..')
@@ -118,16 +124,21 @@ export class SnippetController {
    */
   async updatePost (req, res) {
     try {
-      if ('description' in req.body) req.doc.description = req.body.description
-      if ('done' in req.body) req.doc.done = req.body.done === 'on'
+      // Check if the user i authorized to do this.
+      if (await this.checkAuthorization(req)) {
+        if ('description' in req.body) req.doc.description = req.body.description
 
-      if (req.doc.isModified()) {
-        await req.doc.save()
-        req.session.flash = { type: 'success', text: 'The snippet was updated successfully.' }
+        if (req.doc.isModified()) {
+          await req.doc.save()
+          req.session.flash = { type: 'success', text: 'The snippet was updated successfully.' }
+        } else {
+          req.session.flash = { type: 'info', text: 'The snippet was not updated because there was nothing to update.' }
+        }
+        res.redirect('..')
       } else {
-        req.session.flash = { type: 'info', text: 'The snippet was not updated because there was nothing to update.' }
+        req.session.flash = { type: 'danger', text: 'You are not authorized to update someone elses snippet.' }
+        res.redirect('..')
       }
-      res.redirect('..')
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
       res.redirect('./update')
@@ -142,7 +153,13 @@ export class SnippetController {
    */
   async delete (req, res) {
     try {
-      res.render('snippets/delete', { viewData: req.doc.toObject() })
+      // Check if the user is authorized to view this.
+      if (await this.checkAuthorization(req)) {
+        res.render('snippets/delete', { viewData: req.doc.toObject() })
+      } else {
+        req.session.flash = { type: 'danger', text: 'You are not authorized to delete someone elses snippet.' }
+        res.redirect('..')
+      }
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
       res.redirect('..')
@@ -157,13 +174,30 @@ export class SnippetController {
    */
   async deletePost (req, res) {
     try {
-      await req.doc.deleteOne()
+      // Check if the user is authorized to do this.
+      if (await this.checkAuthorization(req)) {
+        await req.doc.deleteOne()
 
-      req.session.flash = { type: 'success', text: 'The snippet was deleted successfully.' }
-      res.redirect('..')
+        req.session.flash = { type: 'success', text: 'The snippet was deleted successfully.' }
+        res.redirect('..')
+      } else {
+        req.session.flash = { type: 'danger', text: 'You are not authorized to delete someone elses snippet.' }
+        res.redirect('..')
+      }
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
       res.redirect('./delete')
     }
+  }
+
+  /**
+   * Checks if the snippet author is the same as the session user.
+   *
+   * @param {object} req - The request object to check.
+   * @returns {boolean} - true or false
+   */
+  async checkAuthorization (req) {
+    const user = req.session.user
+    return req.doc.author.includes(user.username)
   }
 }
