@@ -1,5 +1,4 @@
-<% if (locals.user) { %>
-  <h1>Create a snippet</h1>
+<h1>Create a snippet</h1>
   <form class="row g-3" method="post" action="./snippets/create">
     <div class="col-md-12">
       <textarea class="form-control" id="descriptionInput" name="description" placeholder="Enter your snippet here" rows="15" required autofocus></textarea>
@@ -8,8 +7,3 @@
       <button type="submit" class="btn btn-primary">Create</button>
     </div>
   </form>
-<% } else { %>
-  <h2>To create snippets you need to login</h2>
-  <br><br><br>
-  <a href="./account/login" class="enter-button">Login</a>
-<% } %>

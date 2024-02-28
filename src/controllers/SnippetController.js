@@ -66,9 +66,22 @@ export class SnippetController {
    *
    * @param {object} req - Express request object.
    * @param {object} res - Express response object.
+   * @param {next} next - Express next middleware function.
    */
-  async create (req, res) {
-    res.render('snippets/create')
+  async create (req, res, next) {
+    try {
+      // Check if the user is authenticated
+      if (await this.checkAuthentication(req)) {
+        res.render('snippets/create')
+      } else {
+        // If user is not authenticated, throw a 404 error
+        const error = new Error('Not Found')
+        error.status = 404
+        throw error
+      }
+    } catch (error) {
+      next(error)
+    }
   }
 
   /**
@@ -193,11 +206,24 @@ export class SnippetController {
   /**
    * Checks if the snippet author is the same as the session user.
    *
-   * @param {object} req - The request object to check.
+   * @param {object} req - Express request object.
    * @returns {boolean} - true or false
    */
   async checkAuthorization (req) {
     const user = req.session.user
     return req.doc.author.includes(user.username)
+  }
+
+  /**
+   * Checks if there is a user in the session cookie.
+   *
+   * @param {object} req - Express request object
+   * @returns {boolean} - true or false
+   */
+  async checkAuthentication (req) {
+    if (req.session.user) {
+      return true
+    }
+    return false
   }
 }
