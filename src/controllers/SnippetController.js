@@ -66,7 +66,7 @@ export class SnippetController {
    *
    * @param {object} req - Express request object.
    * @param {object} res - Express response object.
-   * @param {next} next - Express next middleware function.
+   * @param {Function} next - Express next middleware function.
    */
   async create (req, res, next) {
     try {
@@ -113,19 +113,28 @@ export class SnippetController {
    *
    * @param {object} req - Express request object.
    * @param {object} res - Express response object.
+   * @param {Function} next - Express next middleware function.
    */
-  async update (req, res) {
+  async update (req, res, next) {
     try {
       // Check if the session user is authorized to view this.
-      if (await this.checkAuthorization(req)) {
-        res.render('snippets/update', { viewData: req.doc.toObject() })
+      if (await this.checkAuthentication(req)) {
+        if (await this.checkAuthorization(req)) {
+          res.render('snippets/update', { viewData: req.doc.toObject() })
+        } else {
+        // If user is not authorized, throw a 403 error
+          const error = new Error('Not Found')
+          error.status = 403
+          throw error
+        }
       } else {
-        req.session.flash = { type: 'danger', text: 'You are not authorized to update someone elses snippet.' }
-        res.redirect('..')
+        // If user is not authenticated, throw a 404 error
+        const error = new Error('Not Found')
+        error.status = 404
+        throw error
       }
     } catch (error) {
-      req.session.flash = { type: 'danger', text: error.message }
-      res.redirect('..')
+      next(error)
     }
   }
 
