@@ -16,8 +16,8 @@ const schema = new mongoose.Schema({
     trim: true,
     minlength: 1
   },
-  done: {
-    type: Boolean,
+  author: {
+    type: String,
     required: true,
     default: false
   }

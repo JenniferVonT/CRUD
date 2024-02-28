@@ -1,3 +1,4 @@
+<% if (locals.user) { %>
 <h1>Delete snippet</h1>
 <form class="row g-3" method="post" action="./snippets/<%= viewData?.id %>/delete">
   <input type="hidden" name="id" value="<%= viewData?.id %>" />
@@ -19,3 +20,4 @@
     <button type="submit" class="btn btn-primary" autofocus="autofocus">Delete</button>
   </div>
 </form>
+<% } %>

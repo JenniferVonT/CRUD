@@ -51,7 +51,7 @@ export class SnippetController {
   async index (req, res, next) {
     try {
       const viewData = {
-        snippets: (await SnippetModel.find())
+        snippets: (await SnippetModel.find().sort({ createdAt: -1 }))
           .map(snippet => snippet.toObject())
       }
 
@@ -79,11 +79,12 @@ export class SnippetController {
    */
   async createPost (req, res) {
     try {
-      const { description, done } = req.body
+      const { description } = req.body
+      const user = req.session.user
 
       await SnippetModel.create({
         description,
-        done: done === 'on'
+        author: user.username
       })
 
       req.session.flash = { type: 'success', text: 'The snippet was created successfully.' }

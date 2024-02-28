@@ -103,3 +103,10 @@ code {
 #createAccountBtn {
   text-decoration: none;
 }
+
+.showUserInHeader {
+  display: inline;
+  padding: 8px;
+  color: #d6c336;
+  cursor: default;
+}

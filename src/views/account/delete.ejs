@@ -1,3 +1,4 @@
+<% if (locals.user) { %>
 <h1>Delete Account</h1>
 <form class="row g-3" method="post" action="./account/<%= locals.user.id %>/delete">
   <input type="hidden" name="id" value="<%= locals.user %>" />
@@ -14,3 +15,4 @@
     <button type="submit" class="btn btn-primary" autofocus="autofocus">Delete</button>
   </div>
 </form>
+<% } %>
