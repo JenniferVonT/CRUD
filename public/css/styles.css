@@ -107,6 +107,7 @@ code {
 .showUserInHeader {
   display: inline;
   padding: 8px;
+  padding-left: 200px;
   color: #d6c336;
   cursor: default;
 }
