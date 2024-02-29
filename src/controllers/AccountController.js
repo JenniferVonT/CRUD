@@ -92,10 +92,10 @@ export class AccountController {
     } catch (error) {
       if (error.code === 11000) {
         req.session.flash = { type: 'danger', text: 'The username is already in use.' }
-        res.redirect('create')
+        res.redirect('./create')
       } else {
         req.session.flash = { type: 'danger', text: error.message }
-        res.redirect('create')
+        res.redirect('./create')
       }
     }
   }
@@ -143,7 +143,7 @@ export class AccountController {
       res.redirect('../snippets')
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
-      res.redirect('login')
+      res.redirect('./login')
     }
   }
 
