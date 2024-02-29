@@ -14,6 +14,7 @@ import { fileURLToPath } from 'node:url'
 import { connectToDatabase } from './config/mongoose.js'
 import { sessionOptions } from './config/sessionOptions.js'
 import { router } from './routes/router.js'
+import { RefreshTokenOptions } from './config/refreshTokenOptions.js'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -74,6 +75,10 @@ try {
 
     next()
   })
+
+  // Initialize and schedule refresh token checks.
+  const refreshToken = new RefreshTokenOptions()
+  refreshToken.scheduleTokenCheck()
 
   // Register routes.
   app.use('/', router)

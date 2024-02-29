@@ -5,6 +5,7 @@
  */
 
 import mongoose from 'mongoose'
+import { BASE_SCHEMA } from './baseSchema.js'
 
 // Create a new schema.
 const refreshTokenSchema = new mongoose.Schema({
@@ -15,9 +16,11 @@ const refreshTokenSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-    expires: '1d'
+    expires: 1000 * 60 * 60 * 24 // 1 day
   }
 })
 
+refreshTokenSchema.add(BASE_SCHEMA)
+
 // Create and export a model using the schema.
-export const refreshTokenModel = mongoose.model('RefreshToken', refreshTokenSchema)
+export const RefreshToken = mongoose.model('RefreshToken', refreshTokenSchema)
