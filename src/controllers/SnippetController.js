@@ -101,7 +101,7 @@ export class SnippetController {
       })
 
       req.session.flash = { type: 'success', text: 'The snippet was created successfully.' }
-      res.redirect('..')
+      res.redirect('./')
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
       res.redirect('./create')
@@ -156,10 +156,10 @@ export class SnippetController {
         } else {
           req.session.flash = { type: 'info', text: 'The snippet was not updated because there was nothing to update.' }
         }
-        res.redirect('..')
+        res.redirect('../')
       } else {
         req.session.flash = { type: 'danger', text: 'You are not authorized to update someone elses snippet.' }
-        res.redirect('..')
+        res.redirect('../')
       }
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
@@ -180,11 +180,11 @@ export class SnippetController {
         res.render('snippets/delete', { viewData: req.doc.toObject() })
       } else {
         req.session.flash = { type: 'danger', text: 'You are not authorized to delete someone elses snippet.' }
-        res.redirect('..')
+        res.redirect('../')
       }
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
-      res.redirect('..')
+      res.redirect('../')
     }
   }
 
@@ -201,10 +201,10 @@ export class SnippetController {
         await req.doc.deleteOne()
 
         req.session.flash = { type: 'success', text: 'The snippet was deleted successfully.' }
-        res.redirect('..')
+        res.redirect('../')
       } else {
         req.session.flash = { type: 'danger', text: 'You are not authorized to delete someone elses snippet.' }
-        res.redirect('..')
+        res.redirect('../')
       }
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }

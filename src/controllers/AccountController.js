@@ -158,10 +158,9 @@ export class AccountController {
     try {
       if (req.session.user) {
         // Remove the session.
-	req.session.destroy()
+        req.session.destroy()
 
-
-	res.redirect('../')
+        res.redirect('../')
       } else {
         // If a user is not active/logged in, throw a 404 error
         const error = new Error('Not Found')
