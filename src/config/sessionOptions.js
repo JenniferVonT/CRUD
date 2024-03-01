@@ -14,7 +14,7 @@ export const sessionOptions = {
   saveUninitialized: false, // Don't save a created but not modified session.
   cookie: {
     maxAge: 1000 * 60 * 60 * 24, // 1 day
-    sameSite: 'strict'
+    sameSite: 'strict' // To prevent the requests to be sent from different sites (for ex. CSRF attacks)
   }
 }
 
