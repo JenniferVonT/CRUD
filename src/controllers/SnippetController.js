@@ -101,7 +101,7 @@ export class SnippetController {
       })
 
       req.session.flash = { type: 'success', text: 'The snippet was created successfully.' }
-      res.redirect('.')
+      res.redirect('..')
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
       res.redirect('./create')

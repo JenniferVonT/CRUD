@@ -88,7 +88,7 @@ export class AccountController {
       })
 
       req.session.flash = { type: 'success', text: 'The account was created successfully. Please login to continue' }
-      res.redirect('login')
+      res.redirect('./login')
     } catch (error) {
       if (error.code === 11000) {
         req.session.flash = { type: 'danger', text: 'The username is already in use.' }
@@ -158,9 +158,10 @@ export class AccountController {
     try {
       if (req.session.user) {
         // Remove the session.
-        req.session.destroy()
+	req.session.destroy()
 
-        res.redirect('/')
+
+	res.redirect('../')
       } else {
         // If a user is not active/logged in, throw a 404 error
         const error = new Error('Not Found')
@@ -183,7 +184,7 @@ export class AccountController {
       res.render('account/delete', { viewData: req.user.toObject() })
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
-      res.redirect('..')
+      res.redirect('./')
     }
   }
 
@@ -201,13 +202,14 @@ export class AccountController {
 
       // Delete the user account in the database and remove the user from the session.
       await req.user.deleteOne()
+
       delete req.session.user
 
       req.session.flash = { type: 'success', text: 'The account was deleted successfully.' }
-      res.redirect('/')
+      res.redirect('../../')
     } catch (error) {
       req.session.flash = { type: 'danger', text: error.message }
-      res.redirect('..')
+      res.redirect('../')
     }
   }
 }
